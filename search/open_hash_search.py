@@ -91,13 +91,13 @@ class OpenHash:
 
     # 해시 테이블 덤프
     def dump(self) -> None:
-        for i in range(self.capacity):
-            print(f'hash[{i:2}]', end='\t')
-            if self.table[i].attribute == Attribute.OCCUPIED:
-                print(f'{self.table[i].key}({self.table[i].value})')
-            elif self.table[i].attribute == Attribute.EMTPY:
+        for hv in range(self.capacity):
+            print(f'hash[{hv:2}]', end='\t')
+            if self.table[hv].attribute == Attribute.OCCUPIED:
+                print(f'{self.table[hv].key}({self.table[hv].value})')
+            elif self.table[hv].attribute == Attribute.EMTPY:
                 print('-- 미등록 --')
-            elif self.table[i].attribute == Attribute.DELETED:
+            elif self.table[hv].attribute == Attribute.DELETED:
                 print('-- 삭제됨 --')
 
 
@@ -105,11 +105,11 @@ if __name__ == "__main__":
     Menu = Enum('Menu', ['add', 'remove', 'search', 'dump', 'exit'])
 
     def select_menu() -> Menu:
-        text = [f'({menu.value}){menu.name}' for menu in Menu]
+        text = [f'({item.value}){item.name}' for item in Menu]
         while True:
             print(*text, sep=" ", end="")
             menu_index = int(input(': '))
-            if 0 <= menu_index < len(Menu):
+            if 0 <= menu_index <= len(Menu):
                 return Menu(menu_index)
 
     open_hash = OpenHash(13)
@@ -123,7 +123,7 @@ if __name__ == "__main__":
             print('삭제 성공' if open_hash.remove(int(input('key : '))) else '삭제 실패')
 
         elif menu == Menu.search:
-            print('검색 결과 : ', open_hash.search(int(input('key : '))))
+            print('검색 결과 :', open_hash.search(int(input('key : '))))
 
         elif menu == Menu.dump:
             open_hash.dump()
