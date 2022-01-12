@@ -2,7 +2,8 @@ class BinarySearch:
     def __init__(self, sorted_iterator: iter):
         self.sorted_iterator = sorted_iterator
 
-    def version_1(self, key: int) -> int:
+    # 원소 검색
+    def search(self, key: int) -> int:
         counter = 0     # 카운터
 
         left = 0
@@ -30,5 +31,5 @@ if __name__ == "__main__":
     iterator = [1, 2, 3, 4, 6, 8, 9, 10, 11, 14]
     target = 11
     binary_search = BinarySearch(iterator)
-    search_index = binary_search.version_1(target)
+    search_index = binary_search.search(target)
     print(f'{target}의 인덱스 : {search_index}')
