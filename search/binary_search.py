@@ -7,7 +7,7 @@ class BinarySearch:
         counter = 0     # 카운터
 
         left = 0
-        right = len(self.sorted_iterator) + 1
+        right = len(self.sorted_iterator) - 1
 
         while True:
             counter += 1
