@@ -19,8 +19,11 @@ class ChainHash:
     # 해시값 연산
     def hash_value(self, key: any) -> int:
         if isinstance(key, int):
-            return key % self.capacity
-        return int(hashlib.sha256(str(key).encode()).hexdigest(), 16) % self.capacity
+            return key % self.capacity              # key type == int
+        byte_str = str(key).encode()                # key → str 변환 후 바이트 문자열 생성
+        hash_value = hashlib.sha256(byte_str)       # 주어진 바이트 문자열의 해시값
+        hex_int = hash_value.hexdigest()            # 해시값을 16진수 문자열로 변환
+        return int(hex_int, 16) % self.capacity     # key type == int
 
     # 원소 추가
     def add(self, key: any, value: any) -> bool:
