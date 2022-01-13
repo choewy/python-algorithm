@@ -27,15 +27,15 @@ class ChainHash:
 
     # 원소 검색
     def search(self, key: any) -> any:
-        hash_value = self.hash(key)		# 해시값
+        hash_value = self.hash(key)     # 해시값
         ref = self.table[hash_value]    # 참조노드
 
         while ref is not None:
-            if ref.key == key:			# 연결 리스트 노드에서 key를 찾은 경우
+            if ref.key == key:          # 연결 리스트 노드에서 key를 찾은 경우
                 return ref.value
             ref = ref.next
 
-        return None						# 연결 리스트 노드에서 key를 찾지 못한 경우
+        return None                     # 연결 리스트 노드에서 key를 찾지 못한 경우
 
     # 원소 추가
     def add(self, key: any, value: any) -> bool:
@@ -48,14 +48,14 @@ class ChainHash:
 
     # 원소 삭제
     def remove(self, key: any) -> bool:
-        hash_value = self.hash(key)		# 해시값
+        hash_value = self.hash(key)     # 해시값
         ref = self.table[hash_value]    # 참조노드
-        pref = None						# 참조노드 앞의 노드
+        pref = None                     # 참조노드 앞의 노드
         while ref is not None:
             if ref.key == key:
-                if pref is None:		# 앞의 노드가 없는 경우
+                if pref is None:        # 앞의 노드가 없는 경우
                     self.table[hash_value] = ref.next
-                else:					# 앞의 노드가 있는 경우
+                else:                   # 앞의 노드가 있는 경우
                     pref.next = ref.next
                 return True
             pref = ref
