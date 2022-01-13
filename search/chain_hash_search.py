@@ -5,16 +5,16 @@ import hashlib
 # 노드
 class Node:
     def __init__(self, key: any, value: any, node):
-        self.key = key      # 키
-        self.value = value  # 값
-        self.next = node    # 참조노드
+        self.key = key      # 키 초기화
+        self.value = value  # 값 초기화
+        self.next = node    # 참조 노드 초기화
 
 
 # 체인법 해시
 class ChainHash:
     def __init__(self, capacity: int):
-        self.capacity = capacity            # 해시 테이블의 크기
-        self.table = [None] * capacity      # 해시 테이블
+        self.capacity = capacity            # 해시 테이블의 크기 초기화
+        self.table = [None] * capacity      # 해시 테이블 초기화
 
     # 해시값 연산
     def hash(self, key: any) -> int:
@@ -28,7 +28,7 @@ class ChainHash:
     # 원소 검색
     def search(self, key: any) -> any:
         hash_value = self.hash(key)     # 해시값
-        ref = self.table[hash_value]    # 참조노드
+        ref = self.table[hash_value]    # 참조 노드
 
         while ref is not None:
             if ref.key == key:          # 연결 리스트 노드에서 key를 찾은 경우
