@@ -17,7 +17,7 @@ class ChainHash:
         self.table = [None] * capacity      # 해시 테이블
 
     # 해시값 연산
-    def hash_value(self, key: any) -> int:
+    def hash(self, key: any) -> int:
         if isinstance(key, int):
             return key % self.capacity              # key type == int
         byte_str = str(key).encode()                # key → str 변환 후 바이트 문자열 생성
@@ -27,7 +27,7 @@ class ChainHash:
 
     # 원소 추가
     def add(self, key: any, value: any) -> bool:
-        hash_value = self.hash_value(key)
+        hash_value = self.hash(key)
         node = self.table[hash_value]
 
         while node is not None:     # 이미 등록된 키
@@ -41,7 +41,7 @@ class ChainHash:
 
     # 원소 삭제
     def remove(self, key: any) -> bool:
-        hash_value = self.hash_value(key)
+        hash_value = self.hash(key)
         node = self.table[hash_value]
         pre_node = None
 
@@ -58,7 +58,7 @@ class ChainHash:
 
     # 원소 검색
     def search(self, key: any) -> any:
-        hash_value = self.hash_value(key)
+        hash_value = self.hash(key)
         node = self.table[hash_value]
 
         while node is not None:
