@@ -7,7 +7,7 @@ class Node:
     def __init__(self, key: any, value: any, node):
         self.key = key      # 키
         self.value = value  # 값
-        self.next = node    # 다음 노드
+        self.next = node    # 참조노드
 
 
 # 체인법 해시
@@ -19,63 +19,57 @@ class ChainHash:
     # 해시값 연산
     def hash(self, key: any) -> int:
         if isinstance(key, int):
-            return key % self.capacity              # key type == int
-        byte_str = str(key).encode()                # key → str 변환 후 바이트 문자열 생성
-        hash_value = hashlib.sha256(byte_str)       # 주어진 바이트 문자열의 해시값
-        hex_int = hash_value.hexdigest()            # 해시값을 16진수 문자열로 변환
-        return int(hex_int, 16) % self.capacity     # key type == int
-
-    # 원소 추가
-    def add(self, key: any, value: any) -> bool:
-        hash_value = self.hash(key)
-        node = self.table[hash_value]
-
-        while node is not None:     # 이미 등록된 키
-            if node.key == key:
-                return False
-            node = node.next
-
-        temp = Node(key, value, self.table[hash_value])
-        self.table[hash_value] = temp
-        return True
-
-    # 원소 삭제
-    def remove(self, key: any) -> bool:
-        hash_value = self.hash(key)
-        node = self.table[hash_value]
-        pre_node = None
-
-        while node is not None:
-            if node.key == key:
-                if pre_node is not None:
-                    self.table[hash_value] = node.next
-                else:
-                    pre_node.next = node.next
-                return True
-            pre_node = node
-            node = pre_node.next
-        return False
+            return key % self.capacity          # key type == int
+        byte_str = str(key).encode()            # key → str 변환 후 바이트 문자열 생성
+        byte_hash = hashlib.sha256(byte_str)    # 주어진 바이트 문자열의 해시값
+        key = byte_hash.hexdigest()             # 해시값을 16진수 문자열로 변환
+        return int(key, 16) % self.capacity     # key type == int
 
     # 원소 검색
     def search(self, key: any) -> any:
-        hash_value = self.hash(key)
-        node = self.table[hash_value]
+        hash_value = self.hash(key)		# 해시값
+        ref = self.table[hash_value]    # 참조노드
 
-        while node is not None:
-            if node.key == key:
-                return node.value
-            node = node.next
+        while ref is not None:
+            if ref.key == key:			# 연결 리스트 노드에서 key를 찾은 경우
+                return ref.value
+            ref = ref.next
 
-        return None
+        return None						# 연결 리스트 노드에서 key를 찾지 못한 경우
+
+    # 원소 추가
+    def add(self, key: any, value: any) -> bool:
+        if self.search(key) is not None:
+            return False  # 이미 등록된 키
+        hash_value = self.hash(key)  # 해시값
+        ref = Node(key, value, self.table[hash_value])
+        self.table[hash_value] = ref
+        return True  # 등록 완료
+
+    # 원소 삭제
+    def remove(self, key: any) -> bool:
+        hash_value = self.hash(key)		# 해시값
+        ref = self.table[hash_value]    # 참조노드
+        pref = None						# 참조노드 앞의 노드
+        while ref is not None:
+            if ref.key == key:
+                if pref is None:		# 앞의 노드가 없는 경우
+                    self.table[hash_value] = ref.next
+                else:					# 앞의 노드가 있는 경우
+                    pref.next = ref.next
+                return True
+            pref = ref
+            ref = ref.next
+        return False
 
     # 해시 테이블 덤프
     def dump(self) -> None:
-        for hv in range(self.capacity):
-            node = self.table[hv]
-            print(f'hash[{hv:2}]', end="")
-            while node is not None:
-                print(f' → {node.key}({node.value})', end='')
-                node = node.next
+        for hash_value in range(self.capacity):
+            ref = self.table[hash_value]
+            print(f'hash[{hash_value:2}]', end="")
+            while ref is not None:
+                print(f' → {ref.key}({ref.value})', end='')
+                ref = ref.next
             print()
 
 
