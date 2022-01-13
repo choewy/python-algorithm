@@ -40,11 +40,11 @@ class ChainHash:
     # 원소 추가
     def add(self, key: any, value: any) -> bool:
         if self.search(key) is not None:
-            return False  # 이미 등록된 키
-        hash_value = self.hash(key)  # 해시값
+            return False                # 이미 등록된 키
+        hash_value = self.hash(key)     # 해시값
         ref = Node(key, value, self.table[hash_value])
         self.table[hash_value] = ref
-        return True  # 등록 완료
+        return True                     # 등록 완료
 
     # 원소 삭제
     def remove(self, key: any) -> bool:
