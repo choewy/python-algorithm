@@ -105,15 +105,15 @@ class OpenHash:
 
 
 if __name__ == "__main__":
-    Menu = Enum('Menu', ['add', 'remove', 'search', 'dump', 'exit'])
+    Menu = Enum('Menu', ['add', 'remove', '검색 알고리즘', 'dump', 'exit'])
 
     def select_menu() -> Menu:
         text = [f'({item.value}){item.name}' for item in Menu]
         while True:
             print(*text, sep=" ", end="")
-            menu_index = int(input(': '))
-            if 0 <= menu_index <= len(Menu):
-                return Menu(menu_index)
+            num = int(input(': '))
+            if 0 <= num <= len(Menu):
+                return Menu(num)
 
     open_hash = OpenHash(13)
     while True:
