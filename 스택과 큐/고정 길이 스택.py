@@ -25,7 +25,7 @@ class FixedStack:
 
     def push(self, value: any) -> None:
         if self.is_full():
-            raise FixedStack.Null       # 예외 처리 발생
+            raise FixedStack.Full       # 예외 처리 발생
         self.stack[self.pointer] = value
         self.pointer += 1
 
@@ -94,13 +94,13 @@ if __name__ == "__main__":
             try:
                 print(f"pop : {fixed_stack.pop()}")
             except FixedStack.Null:
-                print('Stack is Null')
+                print('Stack is Empty')
 
         elif menu == Menu.peek:
             try:
                 print(f"peek : {fixed_stack.peek()}")
             except FixedStack.Null:
-                print('Stack is Null')
+                print('Stack is Empty')
 
         elif menu == Menu.find:
             val = int(input('value : '))
